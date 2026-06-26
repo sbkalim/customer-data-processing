@@ -1,0 +1,364 @@
+{
+  "name": "Customer Data Process",
+  "nodes": [
+    {
+      "parameters": {
+        "operation": "getAllPeople",
+        "returnAll": true
+      },
+      "type": "n8n-nodes-base.n8nTrainingCustomerDatastore",
+      "typeVersion": 1,
+      "position": [
+        224,
+        48
+      ],
+      "id": "690f86a4-60c7-419d-8d08-23510e104812",
+      "name": "Customer Datastore (n8n training)"
+    },
+    {
+      "parameters": {
+        "operation": "search",
+        "base": {
+          "__rl": true,
+          "value": "app9I3KJprnRcmdYe",
+          "mode": "list",
+          "cachedResultName": "customers-info",
+          "cachedResultUrl": "https://airtable.com/app9I3KJprnRcmdYe"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tblgIPEw0zfvGmpWW",
+          "mode": "list",
+          "cachedResultName": "customer-details",
+          "cachedResultUrl": "https://airtable.com/app9I3KJprnRcmdYe/tblgIPEw0zfvGmpWW"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.2,
+      "position": [
+        448,
+        48
+      ],
+      "id": "30d58b71-676e-45bf-bf3d-d937480a91ca",
+      "name": "Search records",
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "lRPwF5r7bjWxczTQ",
+          "name": "Airtable Personal Access Token account 656"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "78fde85f-bcb5-4095-aa33-28bdda911ddd",
+              "leftValue": "={{ $json.fields.Country }}",
+              "rightValue": "Bangladesh",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        896,
+        48
+      ],
+      "id": "83f18671-44e1-413f-982b-1ba53feb358e",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "eceef182-1f2a-43d7-ad8e-094741aabe9d",
+              "name": "Full Name",
+              "value": "={{ $json['Full Name'] }}",
+              "type": "string"
+            },
+            {
+              "id": "664d68f7-0851-4026-b563-f36907a8b729",
+              "name": "Phone",
+              "value": "={{ $json.Phone }}",
+              "type": "string"
+            },
+            {
+              "id": "efb1ef70-8f31-4e94-8535-69c14236d515",
+              "name": "fields.Country",
+              "value": "={{ $json.fields.Country }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1120,
+        -48
+      ],
+      "id": "0a4f8deb-dd64-4c1c-8025-fc29499a04d9",
+      "name": "BD Customer"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "eceef182-1f2a-43d7-ad8e-094741aabe9d",
+              "name": "Full Name",
+              "value": "={{ $json['Full Name'] }}",
+              "type": "string"
+            },
+            {
+              "id": "664d68f7-0851-4026-b563-f36907a8b729",
+              "name": "Phone",
+              "value": "={{ $json.Phone }}",
+              "type": "string"
+            },
+            {
+              "id": "efb1ef70-8f31-4e94-8535-69c14236d515",
+              "name": "fields.Country",
+              "value": "={{ $json.fields.Country }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1120,
+        144
+      ],
+      "id": "a99589ec-d1ed-4471-a168-9f345d0f5479",
+      "name": "Foreign Clients"
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.fields.Country }}",
+                    "rightValue": "United Arab Emirates",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "id": "55cb4a8f-8a63-47dc-8c32-cba8ccff005d"
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "eb4a42f5-5974-43ff-940e-1ca8a049c2e8",
+                    "leftValue": "={{ $json.fields.Country }}",
+                    "rightValue": "China",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.4,
+      "position": [
+        1344,
+        144
+      ],
+      "id": "bb8cec46-07d7-4db7-ba72-c6128ad66eb9",
+      "name": "UAE China"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "31558a7d-7653-4773-984d-f6a7ee750dd4",
+              "name": "Full Name",
+              "value": "={{ $json.fields['First Name'] }} {{ $json.fields['Last Name'] }}",
+              "type": "string"
+            },
+            {
+              "id": "dff95fcb-ffd5-4d0e-b267-cbe9bd20b706",
+              "name": "fields.Email",
+              "value": "={{ $json.fields.Email }}",
+              "type": "string"
+            },
+            {
+              "id": "f7a293f4-87be-460f-a11b-6b8766bc20cb",
+              "name": "Phone",
+              "value": "={{ $json.fields['Phone 1'] }}",
+              "type": "string"
+            },
+            {
+              "id": "1b85f9ee-4fc4-43a2-b44a-2b3827af9f28",
+              "name": "fields.Country",
+              "value": "={{ $json.fields.Country }}",
+              "type": "string"
+            },
+            {
+              "id": "a4d2a9a1-23e2-4e52-a807-fcfe1681f735",
+              "name": "fields.City",
+              "value": "={{ $json.fields.City }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        672,
+        48
+      ],
+      "id": "a135fa4f-2c29-4f2c-ad50-963d753ec02c",
+      "name": "Data Cleaning"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        16,
+        48
+      ],
+      "id": "d066af13-d3d5-48a8-9347-edd73bcf94cf",
+      "name": "When clicking ‘Execute workflow’"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Customer Datastore (n8n training)": {
+      "main": [
+        [
+          {
+            "node": "Search records",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Search records": {
+      "main": [
+        [
+          {
+            "node": "Data Cleaning",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "BD Customer",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Foreign Clients",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Foreign Clients": {
+      "main": [
+        [
+          {
+            "node": "UAE China",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Data Cleaning": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Customer Datastore (n8n training)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "05dd6b97-be68-4f8f-8ea5-afe02d8f1086",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "5f00bba974abf03cb5183d4d65f8a9645a781b04770df6a7d08284fca87d50b3"
+  },
+  "nodeGroups": [],
+  "id": "ZC35lwx2bVECvEaG",
+  "tags": []
+}
